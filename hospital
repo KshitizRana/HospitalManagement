@@ -1,0 +1,495 @@
+import mysql.connector as a
+con=a.connect(host='localhost', user='root', passwd='123456', database='hospital')
+cursor=con.cursor()
+def add_patient():
+    P_ID= input("Enter the patient id:")
+    P_NAME=input("Enter the name of patient:")
+    P_AGE=int(input("Enter the age of patient:"))
+    P_PROBLEM=input("Enter the disease:")
+    P_ADDRESS=input("Enter the address:")
+    P_PHONE=int(input("Enter the mobile number:"))
+    P_DATE=input("Enter the date(YYYY-MM-DD):")
+    P_BILL=int(input("Enter the bill:"))
+    insert="insert into management \n values({},{},{},{},{},{},{},{})".format(P_ID,P_NAME,P_AGE,P_PROBLEM,P_ADDRESS,P_PHONE,P_DATE,P_BILL)
+    cursor.execute(insert)
+    print('*'*20)
+    print("PATIENT SUCCESSFULLY REGISTERED")
+    print('*'*20)
+    con.commit()
+def add_doctor():
+    D_ID= input("Enter the Doctor id:")
+    D_NAME=input("Enter the name of Doctor:")
+    D_DEPARTMENT=input("Enter the Department:")
+    D_ADDRESS=input("Enter the Address:")
+    D_PHONE=int(input("Enter the Mobile number:"))
+    D_DOJ=input("Enter the date of joining(YYYY-MM-DD):")
+    insert="insert into DOCTORS \n values({},{},{},{},{},{})".format(D_ID,D_NAME,D_DEPARTMENT,D_ADDRESS,D_PHONE,D_DOJ)
+    cursor.execute(insert)
+    print('*'*20)
+    print("DOCTOR SUCCESSFULLY REGISTERED")
+    print('*'*20)
+    con.commit()
+def add_worker():
+    W_ID= input("Enter the Worker id:")
+    W_NAME=input("Enter the name of Worker:")
+    W_AGE=int(input("Enter the age of Worker:"))
+    W_DEPARTMENT=input("Enter the Department:")
+    W_ADDRESS=input("Enter the address:")
+    W_PHONE=int(input("Enter the mobile number:"))
+    W_DOJ=input("Enter the date(YYYY-MM-DD):")
+    insert="insert into worker \n values({},{},{},{},{},{},{})".format(W_ID,W_NAME,W_AGE,W_DEPARTMENT,W_ADDRESS,W_PHONE,W_DOJ)
+    cursor.execute(insert)
+    print('*'*20)
+    print("WORKER SUCCESSFULLY REGISTERED")
+    print('*'*20)
+    con.commit()
+def del_patient():
+    i=input("Enter the patient id:")
+    Del="delete from management where P_ID=({})".format(i)
+    cursor.execute(Del)
+    print('*'*20)
+    print("RECORD SUCCESSFULLY DELETED")
+    print('*'*20)
+    con.commit()
+def del_doctor():
+    i=input("Enter the doctor id:")
+    Del="delete from DOCTORS where D_ID=({})".format(i)
+    cursor.execute(Del)
+    print('*'*20)
+    print("RECORD SUCCESSFULLY DELETED")
+    print('*'*20)
+    con.commit()
+def del_worker():
+    i=input("Enter the worker id:")
+    Del="delete from worker where W_ID=({})".format(i)
+    cursor.execute(Del)
+    print('*'*20)
+    print("RECORD SUCCESSFULLY DELETED")
+    print('*'*20)
+    con.commit()
+def see_patient():
+    s="select* from management"
+    cursor.execute(s)
+    r=cursor.fetchall()
+    for i in r:
+        print(i)
+def see_doctors():
+    s="select* from DOCTORS"
+    cursor.execute(s)
+    r=cursor.fetchall()
+    for i in r:
+        print(i)
+def see_workers():
+    s="select* from worker"
+    cursor.execute(s)
+    r=cursor.fetchall()
+    for i in r:
+        print(i)
+def single_Wrec():
+    i=input("Enter workers id :")
+    s="SELECT * FROM worker \n WHERE W_ID={}".format(i)
+    cursor.execute(s)
+    r=cursor.fetchall()
+    for i in r:
+        print(i)
+def single_Drec():
+    i=input("Enter doctors id :")
+    s="SELECT * FROM DOCTORS \n WHERE D_ID={}".format(i)
+    cursor.execute(s)
+    r=cursor.fetchall()
+    for i in r:
+        print(i)
+def single_Prec():
+    i=input("Enter patient id :")
+    s="SELECT * FROM management \n WHERE P_ID={}".format(i)
+    cursor.execute(s)
+    r=cursor.fetchall()
+    for i in r:
+        print(i)
+def updt_patient():
+    i=input("Enter the patient id:")
+    print('''Which of the following data you want to update:
+    1.Name
+    2. Age
+    3. Problem/disease
+    4. Address
+    5. Phone
+    6. Bill
+    7. exit''')
+    ans='y'
+    while ans=='y':
+        ch=int(input("Enter your choice:"))
+        if ch==1:
+            n=input("Enter the name you want to update:")
+            update="update management set P_NAME='{}' where P_ID={}".format(n,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("PATIENT NAME SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==2:
+            a=input("Enter the Age you want to update:")
+            update="update management set P_AGE='{}' where P_ID={}".format(a,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("PATIENT AGE SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==3:
+            p=input("Enter the Problem you want to update:")
+            update="update management set P_PROBLEMS='{}' where P_ID={}".format(p,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("PATIENT PROBLEM SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==4:
+            a=input("Enter the Address you want to update:")
+            update="update management set P_ADDRESS='{}' where P_ID={}".format(a,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("PATIENT ADDRESS SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==5:
+            p=int(input("Enter the Phone Number you want to update:"))
+            update="update management set P_PHONE='{}' where P_ID={}".format(p,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("PATIENT PHONE NUMBER SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==6:
+            b=input("Enter the Bill amount you want to update:")
+            update="update management set P_BILL='{}' where P_ID={}".format(b,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("PATIENT BILL SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==7:
+            break
+        else:
+            ans=input("wrong number entered. Do you want to do it again(y/n): ")
+def updt_doctor():
+    i=input("Enter the Doctor id:")
+    print('''Which of the following data you want to update:
+    1.Name
+    2. Department
+    3. Address
+    4. Phone
+    5. Date of joining
+    6. exit''')
+    ans='y'
+    while ans=='y':
+        ch=int(input("Enter your choice:"))
+        if ch==1:
+            n=input("Enter the name you want to update:")
+            update="update DOCTORS set D_NAME='{}' where D_ID={}".format(n,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("DOCTOR NAME SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==2:
+            a=input("Enter the Department you want to update:")
+            update="update DOCTORS set D_DEPARTMENT='{}' where D_ID={}".format(a,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("DOCTORS DEPARTMENT SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==3:
+            p=input("Enter the address you want to update:")
+            update="update DOCTORS set D_ADDRESS='{}' where D_ID={}".format(p,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("DOCTORS ADDRESS SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==4:
+            a=input("Enter the Phone number you want to update:")
+            update="update DOCTORS set D_PHONE='{}' where D_ID={}".format(a,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("DOCTOR PHONE NUMBER SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==5:
+            p=int(input("Enter the Date of joining(YYYY-MM-DD) you want to update:"))
+            update="update DOCTORS set D_DOJ='{}' where D_ID={}".format(p,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("DOCTOR DOJ SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==6:
+            break
+        else:
+            ans=input("wrong number entered. Do you want to do it again(y/n): ")
+def updt_worker():
+    i=input("Enter the Worker id:")
+    print('''Which of the following data you want to update:
+    1.Name
+    2. Age
+    3. Department
+    4. Address
+    5. Phone
+    6. Date of joining
+    7. exit''')
+    ans='y'
+    while ans=='y':
+        ch=int(input("Enter your choice:"))
+        if ch==1:
+            n=input("Enter the name you want to update:")
+            update="update worker set W_NAME='{}' where W_ID={}".format(n,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("WORKER NAME SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==2:
+            a=input("Enter the Age you want to update:")
+            update="update worker set W_AGE='{}' where W_ID={}".format(a,i)
+            cursor.execute(update)
+            print('*'*20)
+            print(" WORKER AGE SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==3:
+            D=input("Enter the Department you want to update:")
+            update="update worker set W_DEPARTMENT='{}' where W_ID={}".format(D,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("WORKER DEPARTMENT SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==4:
+            a=input("Enter the Address you want to update:")
+            update="update Worker set W_ADDRESS='{}' where W_ID={}".format(a,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("WORKER ADDRESS SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==5:
+            p=int(input("Enter the Phone Number you want to update:"))
+            update="update worker set W_PHONE='{}' where W_ID={}".format(p,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("WORKER PHONE NUMBER SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==6:
+            d=input("Enter the Date of joining(YYYY-MM-DD) you want to update:")
+            update="update worker set W_DOJ='{}' where W_ID={}".format(d,i)
+            cursor.execute(update)
+            print('*'*20)
+            print("DATE OF JOINING SUCCESSFULLY UPDATED.")
+            print('*'*20)
+            con.commit()
+        elif ch==7:
+            break
+        else:
+            ans=input("wrong number entered. Do you want to do it again(y/n): ")
+print(" "*47,"-"*51)
+print(" "*52,"HOSPITAL MANAGEMENT SYSTEM")
+print(" "*47,"-"*51)
+ans='y'
+while ans=='y':
+    print('''1. ADMIN PANEL
+2. RECEPTION USER
+3. SEARCH OPTION
+4. APPPOINTMENNTS
+5. EXIT''')
+    ch=int(input("Enter your choice:"))
+    if ch==1:
+        print(" "*53,"-"*30,"\n" ," "*61,"ADMIN MENU","\n"," "*52,"-"*30)
+        print('''1. LOGIN
+2. EXIT''')
+        ch=int(input("Enter your choice:"))
+        if ch==1:
+            u=input("Enter username:")
+            p=input("Enter the password:")
+            if u=='school123' and p=='1234':
+                ans='y'
+                while ans=='y':
+                    print("1. Doctor details             2. Worker details               3. Total details         4. Exit")
+                    ch=int(input("Enter your choice:"))
+                    if ch==1:
+                        print("1. Register       2.Delete        3. Update       4. Exit")
+                        ch=int(input("Enter your choice:"))
+                        if ch==1:
+                            add_doctor()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==2:
+                            del_doctor()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==3:
+                            updt_doctor()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==4:
+                            exit()
+                        else:
+                            ans=input("You have entered wrong no. !! Do you want to do your task(y/n):") 
+                    elif ch==2:
+                        print("1. Register       2.Delete        3. Update       4. Exit")
+                        ch=int(input("Enter your choice:"))
+                        if ch==1:
+                            add_worker()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==2:
+                            del_worker()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==3:
+                            updt_worker()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==4:
+                            exit()
+                        else:
+                            ans=input("You have entered wrong no. !! Do you want to do your task(y/n):") 
+                    elif ch==3:
+                        print("1. Total Patient details    2. Total Doctors details      3. Total Workers details     4.Exit")
+                        ch=int(input("Enter your choice:"))
+                        if ch==1:
+                            see_patient()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==2:
+                            see_doctors()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==3:
+                            see_workers()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==4:
+                            exit()
+                    elif ch==4:
+                        exit()
+                    else:
+                        ans=input("You have entered wrong no. !! Do you want to do your task(y/n):") 
+            else:
+                ans=input("!!!! WRONG USERNAME & PASSWORD!!!!  DO YOU WANT TO TRY AGAIN(y/n):")
+        elif ch==2:
+                exit()
+        else:
+               ans=input("You have entered wrong no. !! Do you want to do your task(y/n):") 
+    elif ch==2:
+        print(" "*53,"-"*30,"\n" ," "*61,"RECEPTION USER","\n"," "*52,"-"*30)
+        print('''1. LOGIN
+2. EXIT''')
+        ch=int(input("Enter your choice:"))
+        if ch==1:
+            u=input("Enter username:")
+            p=input("Enter the password:")
+            if u=='Hospital123' and p=='1234':
+                ans='y'
+                while ans=='y':
+                    print("1. Patient details             2. Worker details               3. Total details         4. Exit")
+                    ch=int(input("Enter your choice:"))
+                    if ch==1:
+                        print("1. Register       2.Delete        3. Update       4. Exit")
+                        ch=int(input("Enter your choice:"))
+                        if ch==1:
+                            add_patient()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==2:
+                            del_patient()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==3:
+                            updt_patient()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==4:
+                            exit()
+                        else:
+                            ans=input("You have entered wrong no. !! Do you want to do your task(y/n):") 
+                    elif ch==2:
+                        print("1. Register       2.Delete        3. Update       4. Exit")
+                        ch=int(input("Enter your choice:"))
+                        if ch==1:
+                            add_worker()
+                            ans=input("Do you want to do anything else (y/n):")
+                        elif ch==2:
+                            del_worker()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==3:
+                            updt_worker()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==4:
+                            exit()
+                        else:
+                            ans=input("You have entered wrong no. !! Do you want to do your task(y/n):") 
+                    elif ch==3:
+                        print("1. Total Patient details    2. Total Doctors details      3. Total Workers details     4.Exit")
+                        ch=int(input("Enter your choice:"))
+                        if ch==1:
+                            see_patient()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==2:
+                            see_doctors()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==3:
+                            see_workers()
+                            ans=input("Do you want to do anything else(y/n):")
+                        elif ch==4:
+                            exit()
+                    elif ch==4:
+                        exit()
+                    else:
+                        ans=input("You have entered wrong no. !! Do you want to do your task(y/n):") 
+            else:
+                ans=input("!!!! WRONG USERNAME & PASSWORD!!!!  DO YOU WANT TO TRY AGAIN(y/n):")
+        elif ch==2:
+            exit()
+        else:
+            ans=input("You have entered wrong no. !! Do you want to do your task(y/n):")
+    elif ch==3:
+        print(" "*53,"-"*30,"\n" ," "*59,"SEARCH OPTION","\n"," "*52,"-"*30)
+        print('''1. LOGIN
+2. EXIT''')
+        ch=int(input("Enter your choice:"))
+        if ch==1:
+            u=input("Enter username:")
+            p=input("Enter the password:")
+            if u=='Hospital123' and p=='1234':
+                ans='y'
+                while ans=='y':
+                    print("1. Patient details       2. Doctor details      3. Worker details         4. Exit")
+                    ch=int(input("Enter your choice:"))
+                    if ch==1:
+                        single_Prec()
+                        ans=input("Do you want to do anything else(y/n):")
+                    elif ch==2:
+                        single_Drec()
+                        ans=input("Do you want to do anything else(y/n):")
+                    elif ch==3:
+                        single_Wrec()
+                        ans=input("Do you want to do anything else(y/n):")
+                    elif ch==4:
+                        exit()
+                    else:
+                        ans=input("You have entered wrong no. !! Do you want to do your task(y/n):") 
+            else:
+                ans=input("!!!! WRONG USERNAME & PASSWORD!!!!  DO YOU WANT TO TRY AGAIN(y/n):")
+    elif ch==4:
+         print(" "*53,"-"*30,"\n" ," "*59,"APPOINTMENT","\n"," "*52,"-"*30)
+         ans='y'
+         while ans=='y':
+             print("1. Register Patient details      2. Register new Doctor details      3. Register new Worker details      4. Exit")
+             ch=int(input("Enter your choice:"))
+             if ch==1:
+                add_patient()
+                ans=input("Do you want to do anything else(y/n):")
+             elif ch==2:
+                add_doctor()
+                ans=input("Do you want to do anything else(y/n):")
+             elif ch==3:
+                add_worker()
+                ans=input("Do you want to do anything else(y/n):")
+             elif ch==4:
+                exit()
+             else:
+                print("You have entered wrong no. !!! Do you want  to try again(y/n):")
+    elif ch==5:
+        print("BYE-BYE...")
+        exit()
+    else:
+        ans=(input("Wrong number entered!!! Do you want to do anything from above(y/n):"))
